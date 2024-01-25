@@ -5,7 +5,7 @@ Toolbx is a comprehensive utility library that serves as a vital resource for ou
 
 ## logger
 
-```toolbx.logger("text", log_level)```
+```toolbx.logger("text":string, log_level:number)```
 
 Print logs in console with clear styles and colors.
 
@@ -31,3 +31,49 @@ returns
 ```
 0.0  hi
 ```
+
+## TOTPseeding
+
+Generate a TOTP seed.
+
+> example
+
+```
+import toolbx from "toolbx";
+
+console.log(toolbx.TOTPseeding());
+```
+
+returns
+
+```
+KTEK5DSPRPO2KQIY
+```
+
+## TOTPtokenization
+
+```toolbx.TOTPtokenization(seed: string)```
+
+Generate a TOTP token with a seed.
+
+> example
+
+```
+import toolbx from "toolbx";
+
+console.log(toolbx.TOTPtokenization(KTEK5DSPRPO2KQIY));
+```
+
+returns
+
+```
+521967
+```
+
+## base32Decode
+
+```toolbx.base32Decode(text:string, var:string)```
+
+Well, as you can see, it does with its name imply.
+
+var: RFC3548, RFC4648, RFC4648-HEX, Crockford
