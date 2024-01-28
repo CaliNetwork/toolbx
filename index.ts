@@ -11,7 +11,7 @@ class toolbx {
             2: { style: '\x1b[31m', symbol: '0.o/ ' },
             3: { style: '\x1b[35m', symbol: 'x.X  ' },
             4: { style: '\x1b[33m', symbol: '?.?  ' },
-            5: { style: '', symbol: '' }
+            5: { style: '', symbol: '     ' }
         };
         if (logLevels[log_level]) {
             console.log(`${logLevels[log_level].style}${logLevels[log_level].symbol}${text}\x1b[0m`);
