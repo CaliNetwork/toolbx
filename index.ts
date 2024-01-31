@@ -15,7 +15,6 @@ class toolbx {
         };
         if (logLevels[log_level]) {
             console.log(`${logLevels[log_level].style}${logLevels[log_level].symbol}${text}\x1b[0m`);
-            return `${logLevels[log_level].style}${logLevels[log_level].symbol}${text}\x1b[0m`;
         } else {
             console.log(`Invalid log level: ${log_level}`);
         }
