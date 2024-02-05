@@ -87,6 +87,60 @@ class toolbx {
         }
         return output.buffer;
     }
+    hread(bytes: number, si: boolean = false, dp: number = 1) {
+        const thresh = si ? 1000 : 1024;
+        const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+        if (Math.abs(bytes) < thresh) {
+            return {
+                num: bytes,
+                unit: 'B'
+            }  
+        }
+
+        let u = -1;
+        const r = 10 ** dp;
+
+        do {
+            bytes /= thresh;
+            ++u;
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+        return {
+            num: bytes.toFixed(dp),
+            unit: units[u]
+        }   
+    }
+    secondsToTime(seconds: number) {
+        let result: any = {}
+        let days = Math.floor(seconds / (24 * 60 * 60));
+        let hours = Math.floor(seconds / (60 * 60));
+        let minutes = Math.floor(seconds / 60);
+
+        if (days > 0) {
+            result = {
+                num: days,
+                unit: "days"
+            }
+        } else if (hours > 0) {
+            result = {
+                num: hours,
+                unit: "hours"
+            }
+        } else if (minutes > 0) {
+            result = {
+                num: minutes,
+                unit: "minutes"
+            }
+        } else {
+            result = {
+                num: seconds,
+                unit: "seconds"
+            }
+        }
+
+        return result;
+    }
 }
 // Export as an object
 export default new toolbx;

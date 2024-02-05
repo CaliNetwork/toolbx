@@ -11,12 +11,14 @@ Print logs in console with clear styles and colors.
 
 > log levels
 
-1. [0]info (white text with a "0.0 ")
-2. [1]success (green text with a "o.0√ ")
-3. [2]warn (magenta text with a "0.o/ ")
-4. [3]critical (red text with a "x.X ")
-5. [4]debug (yellow text with a "?.? ")
-6. [5]empty (white text with nothing)
+|Code|Level|Color|Prefix|
+|-|-|-|-|
+|0|info|white|0.0|
+|1|success|green|o.0√|
+|2|warn|magenta|0.o/|
+|3|critical|red|x.X|
+|4|debug|yellow|?.?|
+|5|empty(reserved)|white|x(nothing)|
 
 > example
 
@@ -77,3 +79,29 @@ returns
 Well, as you can see, it does with its name imply.
 
 var: RFC3548, RFC4648, RFC4648-HEX, Crockford
+
+## hread
+
+Convert bytes to human readable units
+
+> Params
+
+(Top->bottom is the order when you're trying to use it, that's to say Top->bottom = Left->Right)
+
+|Item|type|default|Purpose|
+|-|-|-|-|
+|bytes|number|X|Input bytes count|
+|si|boolean|false|Use SI units|
+|dp|number|1|To the nearest few digits|
+
+> Example
+
+`toolbx.hread(91283129)` returns an object contains two items one is num and the other is units
+
+## secondsToTime
+
+Convert seconds to human readable time units
+
+> Example
+
+`toolbx.secondsToTime(91283129)` returns an object contains two items one is num and the other is time units
