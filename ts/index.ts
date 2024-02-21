@@ -144,3 +144,9 @@ class toolbx {
 }
 // Export as an object
 export default new toolbx;
+
+const tb = new toolbx
+let array: any = [0, 1, 2, 3, 4, 5]
+for (const n in array) {
+tb.logger("msg", n)
+}
