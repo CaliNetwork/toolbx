@@ -5,7 +5,7 @@ Toolbx is a comprehensive utility library that serves as a vital resource for ou
 
 ## logger
 
-```toolbx.logger("text":string, log_level:number)```
+```logger("text":string, log_level:number)```
 
 Print logs in console with clear styles and colors.
 
@@ -23,7 +23,7 @@ Print logs in console with clear styles and colors.
 > example
 
 ```
-import toolbx from "toolbx";
+import { logger } from "toolbx";
 
 toolbx.logger("hi", 0);
 ```
@@ -41,9 +41,9 @@ Generate a TOTP seed.
 > example
 
 ```
-import toolbx from "toolbx";
+import { TOTP } from "toolbx";
 
-console.log(toolbx.TOTPseeding());
+console.log(TOTP.seeding());
 ```
 
 returns
@@ -54,16 +54,16 @@ KTEK5DSPRPO2KQIY
 
 ## TOTPtokenization
 
-```toolbx.TOTPtokenization(seed: string)```
+```TOTP.tokenization(seed: string)```
 
 Generate a TOTP token with a seed.
 
 > example
 
 ```
-import toolbx from "toolbx";
+import { TOTP } from "toolbx";
 
-console.log(toolbx.TOTPtokenization(KTEK5DSPRPO2KQIY));
+console.log(TOTP.tokenization(KTEK5DSPRPO2KQIY));
 ```
 
 returns
@@ -74,7 +74,7 @@ returns
 
 ## base32Decode
 
-```toolbx.base32Decode(text:string, var:string)```
+```TOTP.base32Decode(text:string, var:string)```
 
 Well, as you can see, it does with its name imply.
 
@@ -96,7 +96,7 @@ Convert bytes to human readable units
 
 > Example
 
-`toolbx.hread(91283129)` returns an object contains two items one is num and the other is units
+`hread(91283129)` returns an object contains two items one is num and the other is units
 
 ## secondsToTime
 
@@ -104,4 +104,4 @@ Convert seconds to human readable time units
 
 > Example
 
-`toolbx.secondsToTime(91283129)` returns an object contains two items one is num and the other is time units
+`secondsToTime(91283129)` returns an object contains two items one is num and the other is time units

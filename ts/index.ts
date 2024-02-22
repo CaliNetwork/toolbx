@@ -1,26 +1,83 @@
 import * as crypto from 'crypto';
-class toolbx {
+
+export const logger = (text: String, log_level: number) => {
+    const logLevels: any = {
+        0: { style: '', symbol: '0.0  ' },
+        1: { style: '\x1b[32m', symbol: 'o.0√ ' },
+        2: { style: '\x1b[31m', symbol: '0.o/ ' },
+        3: { style: '\x1b[35m', symbol: 'x.X  ' },
+        4: { style: '\x1b[33m', symbol: '?.?  ' },
+        5: { style: '', symbol: '     ' }
+    };
+    if (logLevels[log_level]) {
+        console.log(`${logLevels[log_level].style}${logLevels[log_level].symbol}${text}\x1b[0m`);
+    } else {
+        console.log(`Invalid log level: ${log_level}`);
+    }
+}
+
+export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
+    const thresh = si ? 1000 : 1024;
+    const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+    if (Math.abs(bytes) < thresh) {
+        return {
+            num: bytes,
+            unit: 'B'
+        }
+    }
+
+    let u = -1;
+    const r = 10 ** dp;
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+    return {
+        num: bytes.toFixed(dp),
+        unit: units[u]
+    }
+}
+
+export const secondsToTime = (seconds: number) => {
+    let result: any = {}
+    let days = Math.floor(seconds / (24 * 60 * 60));
+    let hours = Math.floor(seconds / (60 * 60));
+    let minutes = Math.floor(seconds / 60);
+
+    if (days > 0) {
+        result = {
+            num: days,
+            unit: "days"
+        }
+    } else if (hours > 0) {
+        result = {
+            num: hours,
+            unit: "hours"
+        }
+    } else if (minutes > 0) {
+        result = {
+            num: minutes,
+            unit: "minutes"
+        }
+    } else {
+        result = {
+            num: seconds,
+            unit: "seconds"
+        }
+    }
+
+    return result;
+}
+
+class TOTP {
     private static RFC4648 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
     private static RFC4648_HEX = '0123456789ABCDEFGHIJKLMNOPQRSTUV';
     private static CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
-    // logger
-    logger(text: string, log_level: number) {
-        const logLevels: any = {
-            0: { style: '', symbol: '0.0  ' },
-            1: { style: '\x1b[32m', symbol: 'o.0√ ' },
-            2: { style: '\x1b[31m', symbol: '0.o/ ' },
-            3: { style: '\x1b[35m', symbol: 'x.X  ' },
-            4: { style: '\x1b[33m', symbol: '?.?  ' },
-            5: { style: '', symbol: '     ' }
-        };
-        if (logLevels[log_level]) {
-            console.log(`${logLevels[log_level].style}${logLevels[log_level].symbol}${text}\x1b[0m`);
-        } else {
-            console.log(`Invalid log level: ${log_level}`);
-        }
-    }
-    TOTPseeding(): string {
-        const characters: string = toolbx.RFC4648;
+    seeding(): string {
+        const characters: string = TOTP.RFC4648;
         let result: string = '';
         const length = 16;
         for (let i = 0; i < length; i++) {
@@ -28,7 +85,7 @@ class toolbx {
         }
         return result;
     }
-    TOTPtokenization(seed: string): string {
+    tokenization(seed: string): string {
         const epoch = Math.round(new Date().getTime() / 1000.0);
         let counter = Math.floor(epoch / 30);
         const counterBuffer = Buffer.alloc(8);
@@ -54,15 +111,15 @@ class toolbx {
         switch (variant) {
             case 'RFC3548':
             case 'RFC4648':
-                alphabet = toolbx.RFC4648;
+                alphabet = TOTP.RFC4648;
                 input = input.replace(/=+$/, '');
                 break;
             case 'RFC4648-HEX':
-                alphabet = toolbx.RFC4648_HEX;
+                alphabet = TOTP.RFC4648_HEX;
                 input = input.replace(/=+$/, '');
                 break;
             case 'Crockford':
-                alphabet = toolbx.CROCKFORD;
+                alphabet = TOTP.CROCKFORD;
                 input = input.toUpperCase().replace(/O/g, '0').replace(/[IL]/g, '1');
                 break;
             default:
@@ -87,66 +144,6 @@ class toolbx {
         }
         return output.buffer;
     }
-    hread(bytes: number, si: boolean = false, dp: number = 1) {
-        const thresh = si ? 1000 : 1024;
-        const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-        if (Math.abs(bytes) < thresh) {
-            return {
-                num: bytes,
-                unit: 'B'
-            }  
-        }
-
-        let u = -1;
-        const r = 10 ** dp;
-
-        do {
-            bytes /= thresh;
-            ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
-
-        return {
-            num: bytes.toFixed(dp),
-            unit: units[u]
-        }   
-    }
-    secondsToTime(seconds: number) {
-        let result: any = {}
-        let days = Math.floor(seconds / (24 * 60 * 60));
-        let hours = Math.floor(seconds / (60 * 60));
-        let minutes = Math.floor(seconds / 60);
-
-        if (days > 0) {
-            result = {
-                num: days,
-                unit: "days"
-            }
-        } else if (hours > 0) {
-            result = {
-                num: hours,
-                unit: "hours"
-            }
-        } else if (minutes > 0) {
-            result = {
-                num: minutes,
-                unit: "minutes"
-            }
-        } else {
-            result = {
-                num: seconds,
-                unit: "seconds"
-            }
-        }
-
-        return result;
-    }
 }
 // Export as an object
-export default new toolbx;
-
-const tb = new toolbx
-let array: any = [0, 1, 2, 3, 4, 5]
-for (const n in array) {
-tb.logger("msg", n)
-}
+export default new TOTP;
