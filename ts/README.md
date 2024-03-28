@@ -15,8 +15,8 @@ Print logs in console with clear styles and colors.
 |-|-|-|
 |0|info|white|
 |1|success|green|
-|2|warn|red|
-|3|critical|magenta|
+|2|critical|red|
+|3|warn|magenta|
 |4|debug|yellow|
 |5|empty(reserved)|white|
 
