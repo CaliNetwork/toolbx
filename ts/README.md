@@ -11,14 +11,14 @@ Print logs in console with clear styles and colors.
 
 > log levels
 
-|Code|Level|Color|Prefix|
-|-|-|-|-|
-|0|info|white|0.0|
-|1|success|green|o.0√|
-|2|warn|magenta|0.o/|
-|3|critical|red|x.X|
-|4|debug|yellow|?.?|
-|5|empty(reserved)|white|x(nothing)|
+|Code|Level|Color|
+|-|-|-|
+|0|info|white|
+|1|success|green|
+|2|warn|red|
+|3|critical|magenta|
+|4|debug|yellow|
+|5|empty(reserved)|white|
 
 > example
 
@@ -31,7 +31,7 @@ toolbx.logger("hi", 0);
 returns
 
 ```
-0.0  hi
+hi
 ```
 
 ## TOTPseeding

@@ -72,6 +72,10 @@ export const secondsToTime = (seconds: number) => {
     return result;
 }
 
+export const generateToken = (byteCounts: number) => {
+	return crypto.randomBytes(byteCounts).toString('hex')
+}
+
 class TOTP {
     private static RFC4648 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
     private static RFC4648_HEX = '0123456789ABCDEFGHIJKLMNOPQRSTUV';
