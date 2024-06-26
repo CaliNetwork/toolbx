@@ -34,6 +34,24 @@ returns
 hi
 ```
 
+## generateToken
+
+Generate a token of x bytes
+
+> example
+
+```
+import { generateToken } from 'toolbx'
+
+console.log(generateToken(16))
+```
+
+returns
+
+```
+6a269fde6f007a12631e4ee35a80a92c
+```
+
 ## TOTPseeding
 
 Generate a TOTP seed.
