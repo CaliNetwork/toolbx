@@ -1,5 +1,16 @@
 import * as crypto from 'crypto';
 
+/**
+ * 
+ * @param text 
+ * @param log_level - Display style
+ *                  - 0	info	white
+                    - 1	success	green
+                    - 2	critical	red
+                    - 3	warn	magenta
+                    - 4	debug	yellow
+                    - 5	empty(reserved)	white
+ */
 export const logger = (text: String, log_level: number) => {
     const logLevels: any = {
         0: { style: '' },
@@ -16,6 +27,16 @@ export const logger = (text: String, log_level: number) => {
     }
 }
 
+/**
+ * 
+ * @param bytes - The byte count
+ * @param si - Use SI (false by default)
+ * @param dp - To the nearest x digits
+ * @returns - {
+ *      num,
+ *      unit
+ *  }
+ */
 export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
     const thresh = si ? 1000 : 1024;
     const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
@@ -41,6 +62,11 @@ export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
     }
 }
 
+/**
+ * 
+ * @param seconds 
+ * @returns - {num, unit}
+ */
 export const secondsToTime = (seconds: number) => {
     let result: any = {}
     let days = Math.floor(seconds / (24 * 60 * 60));
@@ -73,7 +99,7 @@ export const secondsToTime = (seconds: number) => {
 }
 
 export const generateToken = (byteCounts: number) => {
-	return crypto.randomBytes(byteCounts).toString('hex')
+    return crypto.randomBytes(byteCounts).toString('hex')
 }
 
 class TOTP {
