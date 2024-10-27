@@ -38,7 +38,7 @@ export const logger = (text: String, log_level: number) => {
  *  }
  */
 export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
-    const thresh = si ? 1024 : 1000;
+    const thresh = si ? 1000 : 1024;
     const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
     if (Math.abs(bytes) < thresh) {
