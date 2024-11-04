@@ -32,19 +32,23 @@ export const logger = (text: String, log_level: number) => {
  * @param bytes - The byte count
  * @param si - Use SI (false by default)
  * @param dp - To the nearest x digits
+ * @param isByte - if true use B, if not use b(true by default)
  * @returns - {
  *      num,
  *      unit
  *  }
  */
-export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
+export const hread = (bytes: number, si: boolean = false, dp: number = 1, isByte: boolean = true) => {
     const thresh = si ? 1000 : 1024;
-    const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    const units = si ?
+        isByte ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb', 'Zb', 'Yb']
+        :
+        isByte ? ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']: ['kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'Zib', 'Yib'];
 
     if (Math.abs(bytes) < thresh) {
         return {
             num: bytes.toFixed(dp),
-            unit: 'B'
+            unit: isByte ? 'B' : 'b'
         }
     }
 
@@ -68,7 +72,7 @@ export const hread = (bytes: number, si: boolean = false, dp: number = 1) => {
  * @returns - {num, unit}
  */
 export const secondsToTime = (seconds: number) => {
-    let result: { num: number; unit: string } = { num: 0, unit: 'seconds'}
+    let result: { num: number; unit: string } = { num: 0, unit: 'seconds' }
     let days = Math.floor(seconds / (24 * 60 * 60));
     let hours = Math.floor(seconds / (60 * 60));
     let minutes = Math.floor(seconds / 60);
